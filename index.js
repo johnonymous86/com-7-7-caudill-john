@@ -57,13 +57,12 @@ var questionsArr = [
   
   let currentQuestionIndex = 0;
   let correctAnswers = 0;
-  let timerInterval;
-  const TIME_PER_QUESTION = 30; // seconds
-  let timeLeft = TIME_PER_QUESTION;
+  const TIME_LEFT = 30; 
+  let timeLeft = TIME_LEFT;
   
  
   function initializeQuiz() {
-    quizContainer.innerHTML = ''; // Clear existing content
+    quizContainer.innerHTML = ''; 
   
     const startButton = document.createElement('button');
     startButton.id = 'start-quiz';
@@ -74,8 +73,62 @@ var questionsArr = [
   
 
 
-  /*function startQuiz() {
+  function startQuiz() {
     currentQuestionIndex = (0);
     correctAnswers = (0);
     displayQuestion();
-  }*/
+  }
+
+  function displayQuestion() {
+    
+    clearInterval(timerInterval);
+  
+    quizContainer.innerHTML = '';
+  
+    
+    if (currentQuestionIndex => questionsArr.length) {
+      endQuiz();
+      return;
+    }
+  
+    const question = questionsArr[currentQuestionIndex];
+    const questionText = document.createElement('p');
+    questionText.textContent = question.question;
+    quizContainer.appendChild(questionText);
+    const optionsDiv = document.createElement('div');
+
+    //creates button for answers
+    question.options.forEach(option => {
+      const optionButton = document.createElement('button');
+      optionButton.textContent = option;
+      optionButton.addEventListener('click', () => handleAnswer(option));
+      optionsDiv.appendChild(optionButton);
+    });
+    quizContainer.appendChild(optionsDiv);
+  
+    // Below adds a timer
+    const timerDisplay = document.createElement('p');
+    timerDisplay.id = 'timer'; 
+    quizContainer.appendChild(timerDisplay);
+  
+    // Initialize and start the timer
+    timeLeft = TIME_LEFT;
+    timerDisplay.textContent = timeLeft;
+  
+    timerInterval = setInterval(() => {
+      timeLeft--; //time decrement
+      timerDisplay.textContent = timeLeft;
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval); //iterate through the questions array 
+        currentQuestionIndex++;
+        displayQuestion();
+      }
+    }, 1000);
+  }
+
+  /*
+  let currentQuestionIndex = 0;
+let score = 0;
+let timerIntervalId = null;
+let timeLeft = 0;
+const TIME_LEFT = 30;

@@ -1,4 +1,4 @@
-// question array variable
+// question array 
 var questionsArr = [
     {
       question: 'Who was the second president of the United States?',
@@ -31,13 +31,13 @@ var questionsArr = [
       ]
     },
     {
-      question: 'How much land does a man need?',
-      answer: '6 feet',
+      question: 'What are the odds of successfully navigating an asteroid field',
+      answer: '3,720 to 1',
       options: [
         '500 miles',
-        '6 feet',
-        '20,000 Leagues',
-        'The entire Siberian Steppe',
+        '3,720 to 1',
+        '42',
+        'Never tell me the odds',
       ]
     },
     {
@@ -52,7 +52,8 @@ var questionsArr = [
     }
   ];
   
-  //grab element and create variables
+  //grab element and create variables NOT WORKING 
+  //quiz not initializing on click event
   const quizContainer = document.getElementById('quiz');
   
   let currentQuestionIndex = 0;
@@ -60,6 +61,7 @@ var questionsArr = [
   const TIME_LEFT = 30; 
   let timeLeft = TIME_LEFT;
   
+
  
   function initializeQuiz() {
     quizContainer.innerHTML = ''; 
@@ -126,9 +128,19 @@ var questionsArr = [
     }, 1000);
   }
 
+  function endQuiz() {
+    quizContainer.innerHTML = '';
+    const score = Math.round((correctAnswers / questionsArr.length) * 100);
+    localStorage.setItem('previous-score', score);
+  }
+
+  window.onload = initializeQuiz;
   /*
   let currentQuestionIndex = 0;
 let score = 0;
 let timerIntervalId = null;
 let timeLeft = 0;
 const TIME_LEFT = 30;
+
+
+/*window.onload = initializeQuiz;*/
